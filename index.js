@@ -35,8 +35,7 @@ const runJob = async()=>{
         const tradeUpdate = new MyTrades();
       tradeUpdate.set("objectId", pairConfig.id); 
       tradeUpdate.set('quote', priceUsd); 
-      tradeUpdate.save(); 
-
+      tradeUpdate.save();  
     }
  
     
