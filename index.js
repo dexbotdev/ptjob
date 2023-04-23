@@ -1,6 +1,7 @@
 import Parse from 'parse/node.js';
 import axios from 'axios'
 import { getChainId } from './getScanLink.js';
+import cron from 'node-cron'
 
 Parse.initialize("qZkw0r3HP50ZpZMAPO1iq2L9RMyhoDmwKhGkYD6K", "ju0i3X5m41RJjZgM2GKf1QB4XWD80BOm8xI1mVoP");
 Parse.serverURL = "https://parseapi.back4app.com/"; 
@@ -13,8 +14,7 @@ const getQuoteForToken = async(chainName,pairAddress)=>{
     console.log(pairAddress); 
     const pricedata = await axios.get(`https://api.dexscreener.com/latest/dex/pairs/${chainName}/${pairAddress}`)
 
-    console.log(pricedata.data);
-
+ 
     return pricedata.data.pair.priceUsd;
 }
 
