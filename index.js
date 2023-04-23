@@ -6,14 +6,12 @@ Parse.initialize("qZkw0r3HP50ZpZMAPO1iq2L9RMyhoDmwKhGkYD6K", "ju0i3X5m41RJjZgM2G
 Parse.serverURL = "https://parseapi.back4app.com/"; 
 const MyTrades = Parse.Object.extend("MyTrades");
 
-const getQuoteForToken = async(chainName,tokenAddress)=>{
+const getQuoteForToken = async(chainName,pairAddress)=>{
 
     const chainId = getChainId(chainName);
     console.log(chainName);
-    console.log(tokenAddress);
-    
-    const pricedata1 = await axios.get(`https://api.dev.dex.guru/v1/chain/56/tokens/market?token_addresses=${tokenAddress}&sort_by=timestamp&order=desc&limit=10&offset=0&api-key=Vg71e4buhUc2uhHpejohD6VTgxMnAyARNc9WkMoWzpQ`)
-    const pricedata = await axios.get(`https://api.dexscreener.com/latest/dex/pairs/${chainName}/${tokenAddress}`)
+    console.log(pairAddress); 
+    const pricedata = await axios.get(`https://api.dexscreener.com/latest/dex/pairs/${chainName}/${pairAddress}`)
 
     console.log(pricedata.data);
 
@@ -42,4 +40,9 @@ const runJob = async()=>{
 }
 
 
-runJob();
+
+cron.schedule('* * * * *', () => {
+    console.log('running getQuoteForToken every pairAddress');
+    runJob();
+
+  });
