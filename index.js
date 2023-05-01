@@ -9,12 +9,12 @@ const MyTrades = Parse.Object.extend("MyTrades");
 
 const getQuoteForToken = async(chainName,pairAddress)=>{
 
-    const chainId = getChainId(chainName);
-    console.log(chainName);
+     console.log(chainName);
     console.log(pairAddress); 
     const pricedata = await axios.get(`https://api.dexscreener.com/latest/dex/pairs/${chainName}/${pairAddress}`)
 
- 
+    console.log(pricedata.data);
+
     return pricedata.data.pair.priceUsd;
 }
 
@@ -29,7 +29,8 @@ const runJob = async()=>{
 
       const pairAddress = pairConfig.get('pairAddress')
       const chainName = pairConfig.get('networkName')
-        const priceUsd = await getQuoteForToken(chainName,pairAddress); 
+        const priceUsd = await getQuoteForToken(chainName,pairAddress);  
+
         const tradeUpdate = new MyTrades();
       tradeUpdate.set("objectId", pairConfig.id); 
       tradeUpdate.set('quote', priceUsd); 
