@@ -3,14 +3,12 @@ import axios from 'axios'
 import { getChainId } from './getScanLink.js';
 import cron from 'node-cron'
 
-Parse.initialize("qZkw0r3HP50ZpZMAPO1iq2L9RMyhoDmwKhGkYD6K", "ju0i3X5m41RJjZgM2GKf1QB4XWD80BOm8xI1mVoP");
+Parse.initialize("EjOopvf32TxOBNafKLhHC50tvp6AGPms9b3QGNV2", "jtFWiFHOxNmb8zujKIFJtwj0UgZTLeRofqj8WCza");
 Parse.serverURL = "https://parseapi.back4app.com/"; 
 const MyTrades = Parse.Object.extend("MyTrades");
 
 const getQuoteForToken = async(chainName,pairAddress)=>{
-
-     console.log(chainName);
-    console.log(pairAddress); 
+ 
     const pricedata = await axios.get(`https://api.dexscreener.com/latest/dex/pairs/${chainName}/${pairAddress}`)
 
     console.log(pricedata.data);
@@ -25,10 +23,11 @@ const runJob = async()=>{
     const trades=[];
     for (let i = 0; i < results.length; i++) {
       const pairConfig = results[i]; 
-      console.log(pairConfig.id)
 
       const pairAddress = pairConfig.get('pairAddress')
       const chainName = pairConfig.get('networkName')
+            console.log(pairAddress)
+
         const priceUsd = await getQuoteForToken(chainName,pairAddress);  
 
         const tradeUpdate = new MyTrades();
